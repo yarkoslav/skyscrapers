@@ -1,6 +1,8 @@
 """
 This module provides some functions to deal with skyscrapers game
+git repo - https://github.com/yarkoslav/skyscrapers_and_puzzle
 """
+
 
 
 def read_input(path: str):
