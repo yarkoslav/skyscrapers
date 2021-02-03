@@ -62,3 +62,31 @@ def check_not_finished_board(board: list):
         if '?' in line:
             is_finished = False
     return is_finished
+
+
+def check_uniqueness_in_rows(board: list):
+    """
+    Check buildings of unique height in each row.
+
+    Return True if buildings in a row have unique length, False otherwise.
+
+    >>> check_uniqueness_in_rows(['***21**', '412453*', '423145*', '*543215', '*35214*',\
+ '*41532*', '*2*1***'])
+    True
+    >>> check_uniqueness_in_rows(['***21**', '452453*', '423145*', '*543215', '*35214*',\
+ '*41532*', '*2*1***'])
+    False
+    >>> check_uniqueness_in_rows(['***21**', '412453*', '423145*', '*553215', '*35214*',\
+ '*41532*', '*2*1***'])
+    False
+    """
+    uniqueness = True
+    rows = board[1:-1]
+    for row in rows:
+        row = row[1:-1]
+        set_of_high = set()
+        for building in row:
+            if building in set_of_high:
+                uniqueness = False
+            set_of_high.add(building)
+    return uniqueness
