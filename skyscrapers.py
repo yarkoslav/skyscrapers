@@ -39,3 +39,26 @@ def left_to_right_check(input_line: str, pivot: int):
         if line[index] >= line[pivot-1]:
             is_visible = False
     return is_visible
+
+
+def check_not_finished_board(board: list):
+    """
+    Check if skyscraper board is not finished, i.e., '?' present on the game board.
+
+    Return True if finished, False otherwise.
+
+    >>> check_not_finished_board(['***21**', '4?????*', '4?????*', '*?????5', '*?????*',\
+ '*?????*', '*2*1***'])
+    False
+    >>> check_not_finished_board(['***21**', '412453*', '423145*', '*543215', '*35214*',\
+ '*41532*', '*2*1***'])
+    True
+    >>> check_not_finished_board(['***21**', '412453*', '423145*', '*5?3215', '*35214*',\
+ '*41532*', '*2*1***'])
+    False
+    """
+    is_finished = True
+    for line in board:
+        if '?' in line:
+            is_finished = False
+    return is_finished
