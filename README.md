@@ -1,2 +1,1 @@
-# tasks from first lab of second semester
-
+# This repo has a solution of skyscrapers game

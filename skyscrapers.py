@@ -1,6 +1,6 @@
 """
 This module provides some functions to deal with skyscrapers game
-git repo - https://github.com/yarkoslav/skyscrapers_and_puzzle
+git repo - https://github.com/yarkoslav/skyscrapers
 """
 
 
@@ -9,9 +9,6 @@ def read_input(path: str):
     """
     Read game board file from path.
     Return list of str.
-
-    >>> read_input("check.txt")
-    ['***21**', '412453*', '423145*', '*543215', '*35214*', '*41532*', '*2*1***']
     """
     data = []
     with open(path, "r") as file:
@@ -36,11 +33,13 @@ def left_to_right_check(input_line: str, pivot: int):
     False
     """
     line = input_line[1:-1]
-    is_visible = True
-    for index in range(pivot-1):
-        if line[index] >= line[pivot-1]:
-            is_visible = False
-    return is_visible
+    now_visible = line[0]
+    counter = 1
+    for height in line:
+        if height > now_visible:
+            now_visible = height
+            counter += 1
+    return counter == pivot
 
 
 def check_not_finished_board(board: list):
@@ -117,17 +116,12 @@ def check_horizontal_visibility(board: list):
     for row in rows:
         if row[0].isdigit():
             hint = int(row[0])
-        elif row[-1].isdigit():
+            if not left_to_right_check(row, hint):
+                is_hor_visible = False
+        if row[-1].isdigit():
             hint = int(row[-1])
             row = row[::-1]
-        else:
-            hint = None
-        counter = 0
-        if hint is not None:
-            for index in range(1, len(row) - 1):
-                if left_to_right_check(row, index):
-                    counter += 1
-            if hint != counter:
+            if not left_to_right_check(row, hint):
                 is_hor_visible = False
     return is_hor_visible
 
@@ -160,9 +154,6 @@ def check_skyscrapers(input_path: str):
     Main function to check the status of skyscraper game board.
     Return True if the board status is compliant with the rules,
     False otherwise.
-
-    >>> check_skyscrapers("check.txt")
-    True
     """
     board = read_input(input_path)
     return check_columns(board) and check_uniqueness_in_rows(board) and\
